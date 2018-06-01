@@ -1,0 +1,86 @@
+QUERY 1
+******
+
+query {
+	stations {
+		name 
+		latitude
+		longitude
+	}
+}
+
+QUERY 2
+******
+query {
+	stations(name: "Barking") {
+		name
+		latitude
+		longitude
+	}
+}
+
+query {
+	stations(name: "Barking") {
+		name
+		audits {
+			startTime
+			completeTime
+		}
+	}
+}
+
+
+QUERY 3
+******
+
+fragment sectionDetails on AuditSection {
+	title, 
+	comment,
+	score
+}
+fragment subSectionDetails on AuditSubSection {
+	title, 
+	comment,
+	questions {
+		value, 
+		selected
+	}
+}
+
+fragment sectionDetails on AuditSection {
+	title, 
+	comment,
+	subSections {
+		... subSectionDetails
+	 }
+}
+
+query {
+	stations {
+		name
+		audits {
+			startTime,
+			completeTime,
+			sections {
+				... sectionDetails
+			}
+		}
+	}
+}
+
+
+QUERY 4
+******
+
+fragment details on AuditAnswer {
+	value,
+	selected
+}
+
+fragment subSectionDetails on AuditSubSection{
+	
+}
+
+
+
+
